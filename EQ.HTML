@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ENQUIRY FORM </title>
+    <style>
+      body{
+background-color: bisque;
+}
+        table{
+border: solid black 1px;
+border-radius: 50px;
+background-color: rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            padding-top: 100px;
+            padding-bottom: 70px;
+
+        }
+        table th td{
+          /* background-color: aqua; */
+          text-align: right;
+          padding-right: 20px;
+          padding-bottom: 30px;
+        }  
+        .butn{
+          text-align: center;
+         
+        }  
+        table td th{
+          /* background-color: aqua; */
+          padding-bottom: 30px;
+        }
+        input[type=text] {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #000000;
+}
+input[type=number] {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #000000;
+    font-size: 100pxs;
+}
+textarea{
+  background-color: rgba(0, 0, 0, 0.05);
+  border: 1px solid black;
+}
+
+@media screen and (max-width: 750px) {
+            table {
+                padding: 10px;
+            }
+
+            input[type=text],
+            input[type=number],
+            textarea {
+                font-size: 30px; /* Increase font size for smaller screens */
+            }
+        }
+
+      </style>
+
+
+
+</head>
+
+
+<script>  
+function validateform(){  
+var password=document.myform.password.value;
+var name=document.myform.name.value;
+var x=document.myform.email.value;  
+var atp=x.indexOf("@");  
+var dotp=x.lastIndexOf(".");
+if (name==null || name==""){  
+  alert("name can't be empty");  
+  return false;
+  }
+else if(/^[a-zA-Z ]+$/.test(name)==false)
+   {    
+      alert("Name must contain only alphabets");    
+      return false;    
+   }
+  
+  else if (password==null || password==""){  
+  alert("Phone number can't be empty");  
+  return false;
+  }
+else if(password.length<10||password.length>10){  
+  alert("Password length must be 10");  
+  return false;  
+  }  
+  else if(/^[0-9 ]+$/.test(password)==false)
+   {    
+      alert("Name must contain only alphabets");    
+      return false;    
+   }
+
+    else if ((atp<1) || (dotp<atp+2) || (dotp+2>=x.length))
+    {  
+    alert("Please enter a valid e-mail address ");  
+    return false;  
+    }    
+
+    }
+</script>  
+<body>
+ 
+<h1><center>ENQUIRY FORM</center></h1>
+<div calss="abc">
+<form name="myform" onsubmit= "return validateform()">
+  <table style="margin-left:auto;margin-right:auto;">
+            
+        <tr>
+            <th>Name: </th>
+            <td><input type="text" name="name"></td>
+        </tr>
+        <tr>
+        <th>Ph no: </th>
+            <td><input type="number" name="password"></td>
+        </tr>
+        
+        <tr>
+            <th>Email: </th>
+            <td><input type="text" name="email">  </td>
+        </tr>
+<tr>
+<th><label for="abt">Message:</label></th>
+<td><textarea id="abt" name="abt" rows="10" cols="25" required>
+</textarea></td>
+</tr>
+<tr>
+<th colspan="2" class="butn">
+<input type="submit" value="SUBMIT"></th>
+</tr>
+</table>
+
+</form>
+</div>
+</body></html>
