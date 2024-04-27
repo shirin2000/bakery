@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map with Location Pins and Custom Boundaries</title>
+    <style>
+        #map {
+            height: 550px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        var map;
+        var markers = [];
+        var areas = ['Area 1', 'Area 2', 'Area 3', 'Area 4', 'Area 5', 'Area 6'];
+        var boundaryCoords1 = [
+            { lat: 44.677800, lng: -79.254949 },
+            { lat: 44.674293, lng: -79.253364 },
+            { lat: 44.671456, lng: -79.252075 },
+            { lat: 44.669178, lng: -79.251048 },
+            { lat: 44.669728, lng: -79.248582 },
+            { lat: 44.670264, lng: -79.246269 },
+            { lat: 44.671404, lng: -79.241352 },
+            { lat: 44.673639, lng: -79.242433 },
+            { lat: 44.675694, lng: -79.243353 },
+            { lat: 44.679276, lng: -79.244956 },
+            { lat: 44.680008, lng: -79.245283 },
+            { lat: 44.678904, lng: -79.250116 }
+        ];
+        var boundaryCoords2 = [
+            { lat: 44.682875, lng: -79.246583 },
+            { lat: 44.682418, lng: -79.248275 },
+            { lat: 44.681744, lng: -79.248099 },
+            { lat: 44.680159, lng: -79.247830 },
+            { lat: 44.679827, lng: -79.247758 },
+            { lat: 44.679654, lng: -79.247666 },
+            { lat: 44.680189, lng: -79.245320 }
+        ];
+        var boundaryCoords3 = [
+            { lat: 44.682875, lng: -79.246583 },
+            { lat: 44.682418, lng: -79.248275 },
+            { lat: 44.681744, lng: -79.248099 },
+            { lat: 44.680159, lng: -79.247830 },
+            { lat: 44.679827, lng: -79.247758 },
+            { lat: 44.679654, lng: -79.247666 },
+            { lat: 44.679576, lng: -79.248006 },
+            { lat: 44.679660, lng: -79.248044 },
+            { lat: 44.679752, lng: -79.247975 },
+            { lat: 44.680092, lng: -79.247970 },
+            { lat: 44.681692, lng: -79.248228 },
+            { lat: 44.682480, lng: -79.248500 },
+            { lat: 44.682801, lng: -79.248560 },
+            { lat: 44.682918, lng: -79.248492 },
+            { lat: 44.683099, lng: -79.248459 },
+            { lat: 44.683780, lng: -79.248600 },
+            { lat: 44.683027, lng: -79.251746 },
+            { lat: 44.683356, lng: -79.251894 },
+            { lat: 44.683569, lng: -79.252203 },
+            { lat: 44.683579, lng: -79.252293 },
+            { lat: 44.684235, lng: -79.253161 },
+            { lat: 44.684629, lng: -79.252404 },
+            { lat: 44.684810, lng: -79.251958 },
+            { lat: 44.684778, lng: -79.251438 },
+            { lat: 44.684961, lng: -79.250873 },
+            { lat: 44.685127, lng: -79.250282 },
+            { lat: 44.686105, lng: -79.249521 },
+            { lat: 44.686352, lng: -79.249211 },
+            { lat: 44.686815, lng: -79.248435 }
+        ];
+        var boundaryCoords4 = [
+            { lat: 44.679576, lng: -79.248006 },
+            { lat: 44.679660, lng: -79.248044 },
+            { lat: 44.679752, lng: -79.247975 },
+            { lat: 44.680092, lng: -79.247970 },
+            { lat: 44.681692, lng: -79.248228 },
+            { lat: 44.682480, lng: -79.248500 },
+            { lat: 44.682801, lng: -79.248560 },
+            { lat: 44.682918, lng: -79.248492 },
+            { lat: 44.683099, lng: -79.248459 },
+            { lat: 44.683780, lng: -79.248600 },
+            { lat: 44.683027, lng: -79.251746 },
+            { lat: 44.682984, lng: -79.251925 },
+            { lat: 44.679081, lng: -79.250174 }
+        ];
+        var boundaryCoords5 = [
+            { lat: 44.683027, lng: -79.251746 },
+            { lat: 44.683356, lng: -79.251894 },
+            { lat: 44.683569, lng: -79.252203 },
+            { lat: 44.683579, lng: -79.252293 },
+            { lat: 44.684235, lng: -79.253161 },
+            { lat: 44.684629, lng: -79.252404 },
+            { lat: 44.684810, lng: -79.251958 },
+            { lat: 44.684778, lng: -79.251438 },
+            { lat: 44.684961, lng: -79.250873 },
+            { lat: 44.685127, lng: -79.250282 },
+            { lat: 44.686105, lng: -79.249521 },
+            { lat: 44.686352, lng: -79.249211 },
+            { lat: 44.686815, lng: -79.248435 },
+            { lat: 44.687011, lng: -79.248528 },
+            { lat: 44.688782, lng: -79.249343 },
+            { lat: 44.689614, lng: -79.245504 },
+            { lat: 44.690369, lng: -79.245861 },
+            { lat: 44.690607, lng: -79.244756 },
+            { lat: 44.698469, lng: -79.248463 },
+            { lat: 44.697449, lng: -79.253210 },
+            { lat: 44.697431, lng: -79.253294 },
+            { lat: 44.696474, lng: -79.257732 },
+            { lat: 44.696381, lng: -79.258172 },
+            { lat: 44.692069, lng: -79.256120 },
+            { lat: 44.691011, lng: -79.261031 },
+            { lat: 44.686670, lng: -79.259002 },
+            { lat: 44.683353, lng: -79.257530 },
+            { lat: 44.682335, lng: -79.257041 },
+            { lat: 44.683455, lng: -79.252137 },
+            { lat: 44.682984, lng: -79.251925 }
+        ];
+        var boundaryCoords6 = [
+        { lat: 44.679081, lng: -79.250174 },
+                { lat: 44.682984, lng: -79.251925 },
+                { lat: 44.683455, lng: -79.252137 },
+                { lat: 44.682335, lng: -79.257041 },
+                { lat: 44.683353, lng: -79.257530 },
+                { lat: 44.686670, lng: -79.259002 },
+                { lat: 44.685613, lng: -79.263841 },
+                { lat: 44.685613, lng: -79.263841 },
+                { lat: 44.681899, lng: -79.262158 },
+                { lat: 44.679878, lng: -79.261234 },
+                { lat: 44.676865, lng: -79.259864 },
+                { lat: 44.677972, lng: -79.255028 }
+        ];
+        var webhookURL = 'https://hook.us1.make.com/w0zay6l1w638gyxr8ya55bp0u4c7tg9f';
+
+        function initMap() {
+            var mapCenter = { lat: 44.682, lng: -79.250 }; // Center of the new boundaries
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 14,
+                center: mapCenter,
+                mapTypeId: 'satellite' // Set map type to satellite
+            });
+
+            // Draw custom boundaries
+            drawCustomBoundary(boundaryCoords1, '#00FFFF');
+            drawCustomBoundary(boundaryCoords2, '#FFFF00');
+            drawCustomBoundary(boundaryCoords3, '#FFA500');
+            drawCustomBoundary(boundaryCoords4, '#FFFF00');
+            drawCustomBoundary(boundaryCoords5, '#FF0000');
+            drawCustomBoundary(boundaryCoords6, '#00FFFF');
+
+            addPin({ lat: 44.680609, lng: -79.249704 }, '#0000FF', '1');
+            addPin({ lat: 44.680879, lng: -79.249855 }, '#800080', '2');
+            addPin({ lat: 44.681133, lng: -79.249981 }, '#1a6217', '3');
+            addPin({ lat: 44.681421, lng: -79.250098 }, '#FFA500', '4');
+            addPin({ lat: 44.681740, lng: -79.250228 }, '#FF00FF', '5');
+
+            // Add event listener for clicking on the map
+            map.addListener('click', function (event) {
+                var areaName = getAreaName(event.latLng);
+                if (areaName) {
+                    addMarker(event.latLng, areaName);
+                } else {
+                    alert('Please select a location within the custom boundaries.');
+                }
+            });
+        }
+
+        function getAreaName(location) {
+            for (var i = 0; i < areas.length; i++) {
+                var path = google.maps.geometry.poly.containsLocation(location, new google.maps.Polygon({ paths: window['boundaryCoords' + (i + 1)] }));
+                if (path) {
+                    return areas[i];
+                }
+            }
+            return null;
+        }
+
+        // Function to draw a custom boundary
+        function drawCustomBoundary(coords, color) {
+            var customBoundary = new google.maps.Polygon({
+                paths: coords,
+                strokeColor: color,
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillOpacity: 0.35,
+                clickable: false // Set the polygon to not intercept click events
+            });
+            customBoundary.setMap(map);
+        }
+
+        function addPin(location, color, number) {
+            var pin = new google.maps.Marker({
+                position: location,
+                map: map,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: color,
+                    fillOpacity: 1,
+                    strokeColor: '#FFFFFF',
+                    strokeWeight: 1,
+                    scale: 7
+                },
+                label: {
+                    text: number,
+                    color: 'white',
+                    fontSize: '12px',
+                    fontWeight: 'bold'
+                }
+            });
+            markers.push(pin);
+        }
+
+        // Function to add a marker at a specific location
+        function addMarker(location, areaName) {
+            clearMarkers();
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+            markers.push(marker);
+
+            var infowindow = new google.maps.InfoWindow({
+                content: 'Area: ' + areaName + '<br>Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+            });
+
+            infowindow.open(map, marker); // Open infowindow immediately when marker is added
+
+            // Send a POST request to the webhook URL
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ area: areaName, latitude: location.lat(), longitude: location.lng() })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Webhook triggered successfully:', data);
+                })
+                .catch(error => {
+                    console.error('There was a problem triggering the webhook:', error);
+                });
+
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+        }
+
+        // Function to clear all markers from the map
+        function clearMarkers() {
+            for (var i = 5; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            markers = [markers[0], markers[1], markers[2], markers[3], markers[4]];
+        }
+    </script>
+    <!-- Include the Google Maps API with the callback to initMap -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEO0_2kf8146iPb4DiTgSZqgsMCtQYktQ&callback=initMap" async defer></script>
+</body>
+</html>
